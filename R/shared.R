@@ -16,8 +16,8 @@ twitter_api_call <- function (url, api, params, print_result = FALSE, use_cygwin
                               cygwin_bash = "c:\\cygwin64\\bin\\bash.exe", print_cmd = FALSE,
                               test = FALSE)
 {
-  # library(jsonlite)
-  # library(RCurl)
+  library(jsonlite)
+  library(RCurl)
   if (is.na(params["oauth_timestamp"])) {
     params["oauth_timestamp"] <- as.character(as.integer(Sys.time()))
   }
@@ -86,9 +86,9 @@ key2auth <- function(key){
 }
 
 oauth1_signature <- function(method, url, api, params, test=FALSE) {
-  # library(RCurl);
-  # library(digest);
-  # library(base64enc);
+  library(RCurl);
+  library(digest);
+  library(base64enc);
 
   # http://oauth.net/core/1.0/#encoding_parameters
 
