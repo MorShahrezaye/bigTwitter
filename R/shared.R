@@ -1,3 +1,12 @@
+#' Loading the csv file containing the list of Twitter keys
+#'
+#' This function takes a file path as input and loads the keys from the file.
+#' Each line (row) should represent a unique key. There csv file should contain no header and the order of the columns should be:
+#' "oauth_consumer_key", "consumer_secret", "oauth_token", "oauth_token_secret"
+#' Files with less or more than four columns are not valid.
+#'
+#' @param file Path to the file
+#' @return A dataframe of Twitter keys
 #' @export
 read.keys <- function(file){
   if(!file.exists(file))

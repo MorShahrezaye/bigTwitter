@@ -19,5 +19,7 @@ Imports:
   digest,
   base64enc,
   jsonlite,
-  RJSONIO
+  RJSONIO,
+  igraph,
+  data.table
 RoxygenNote: 7.0.0

@@ -1,8 +1,20 @@
+#' Downloading the follower ids of a list of users
+#'
+#' This function takes a single user (user id or user screen name) and downloads the followers of each user.
+#' Either of screen_name_list or user_id_list must be provided
+#'
+#' @param screen_name_list A list of Twitter screen names
+#' @param user_id_list A list of Twitter numerical ids (as character)
+#' @param auth_df The dataframe containing the Twitter keys (check read.keys function)
+#' @param sleepTime Sleep time (in seconds) when activating next key
+#' @param max_per_user Max number of followers to download per user
+#' @param verbose Monitor the process (recommended for debuging!)
+#' @return A list of users and their followers
 #' @export
-getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, sleepTime = 30, verbose = F){
-  # require(itertools)
+getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, sleepTime = 30, max_per_user = 15000, verbose = F){
+  require(itertools)
   require(iterators)
-  # require(utils)
+  require(utils)
   options(scipen=999)
 
   if(is.null(screen_name_list) & is.null(user_id_list))
@@ -35,7 +47,7 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
     }
 
     RESPONSE <- list(response = NULL, next_cursor_str = "-1")
-    while(RESPONSE$next_cursor_str != "0"){
+    while(RESPONSE$next_cursor_str != "0" & (length(RESPONSE$response)+1)<=max_per_user){
       q["cursor"] <- RESPONSE$next_cursor_str
       if(verbose)
         message("cursor at ", q["cursor"])
@@ -53,7 +65,7 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
         } else {
           continue <- FALSE
         }
-        if(grepl("Sorry, that page does not exist.|Not authorized|error", current)){
+        if(grepl("Sorry, that page does not exist.|Not authorized", current)){
           if(verbose)
             message(current)
           continue <- -1
@@ -83,11 +95,23 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
   return(results)
 }
 
+#' Downloading the friends ids of a list of users
+#'
+#' This function takes a single user (user id or user screen name) and downloads the friends of each user.
+#' Either of screen_name_list or user_id_list must be provided
+#'
+#' @param screen_name_list A list of Twitter screen names
+#' @param user_id_list A list of Twitter numerical ids (as character)
+#' @param auth_df The dataframe containing the Twitter keys (check read.keys function)
+#' @param sleepTime Sleep time (in seconds) when activating next key
+#' @param max_per_user Max number of friends to download per user
+#' @param verbose Monitor the process (recommended for debuging!)
+#' @return A list of users and their friends
 #' @export
-getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, sleepTime = 30, verbose = F){
-  # require(itertools)
-  # require(iterators)
-  # require(utils)
+getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, sleepTime = 30, max_per_user = 15000, verbose = F){
+  require(itertools)
+  require(iterators)
+  require(utils)
   options(scipen=999)
 
   if(is.null(screen_name_list) & is.null(user_id_list))
@@ -120,7 +144,7 @@ getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, 
     }
 
     RESPONSE <- list(response = NULL, next_cursor_str = "-1")
-    while(RESPONSE$next_cursor_str != "0"){
+    while(RESPONSE$next_cursor_str != "0" & (length(RESPONSE$response)+1)<=max_per_user){
       q["cursor"] <- RESPONSE$next_cursor_str
       if(verbose)
         message("cursor at ", q["cursor"])
@@ -138,7 +162,7 @@ getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, 
         } else {
           continue <- FALSE
         }
-        if(grepl("Sorry, that page does not exist.|Not authorized|error", current)){
+        if(grepl("Sorry, that page does not exist.|Not authorized", current)){
           if(verbose)
             message(current)
           continue <- -1
@@ -167,7 +191,3 @@ getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, 
   message("out of ", length(items), ", ", length(results), " got downloaded")
   return(results)
 }
-
-
-
-
