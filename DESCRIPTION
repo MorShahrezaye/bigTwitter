@@ -1,0 +1,23 @@
+Package: bigTwitteR
+Title: tools to download and analyze Twitter data in larger scales
+Version: 0.0.1
+Authors@R: 
+    person(given = "Morteza",
+           family = "Shahrezaye",
+           role = c("aut", "cre"),
+           email = "morteza.shahrezaye@gmail.com",
+           comment = c(website = "bedatify.com"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports:
+  itertools,
+  iterators,
+  utils,
+  RCurl,
+  digest,
+  base64enc,
+  jsonlite,
+  RJSONIO
+RoxygenNote: 7.0.0
