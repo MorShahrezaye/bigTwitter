@@ -9,6 +9,8 @@ The main advantages of this package over the other R packages are:
 
 There is no gurantee that the functions perform as intended and there might be bugs in the code! 
 
+This package is for Linux operating system optimized and might not work properly in other operating systems (specially in Windows!).
+
 <h1>Sample use</h1>
 Downloading the complete list of friends of a Twitter user
 
