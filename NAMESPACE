@@ -3,4 +3,5 @@
 export(getFollowerIDs)
 export(getFriendIDs)
 export(read.keys)
+export(showUsers)
 export(userEdgeList2graph)

@@ -1,6 +1,6 @@
 #' Downloading the follower ids of a list of users
 #'
-#' This function takes a single user (user id or user screen name) and downloads the followers of each user.
+#' This function takes a single or a list of users (user id or user screen name) and downloads the followers of each user.
 #' Either of screen_name_list or user_id_list must be provided
 #'
 #' @param screen_name_list A list of Twitter screen names
@@ -97,7 +97,7 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
 
 #' Downloading the friends ids of a list of users
 #'
-#' This function takes a single user (user id or user screen name) and downloads the friends of each user.
+#' This function takes a single or a list of users (user id or user screen name) and downloads the friends of each user.
 #' Either of screen_name_list or user_id_list must be provided
 #'
 #' @param screen_name_list A list of Twitter screen names

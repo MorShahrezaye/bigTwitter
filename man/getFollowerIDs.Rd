@@ -30,6 +30,6 @@ getFollowerIDs(
 A list of users and their followers
 }
 \description{
-This function takes a single user (user id or user screen name) and downloads the followers of each user.
+This function takes a single or a list of users (user id or user screen name) and downloads the followers of each user.
 Either of screen_name_list or user_id_list must be provided
 }
