@@ -11,7 +11,7 @@ There is no gurantee that the functions perform as intended and there might be b
 
 <h1>Sample use</h1>
 Downloading the complete list of friends of a Twitter user
-```R
+```r
 #install and load the package
 devtools::install_github("MorShahrezaye/bigTwitter", force = TRUE)
 library(bigTwitteR)
