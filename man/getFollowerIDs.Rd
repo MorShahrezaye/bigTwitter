@@ -10,7 +10,10 @@ getFollowerIDs(
   auth_df,
   sleepTime = 30,
   max_per_user = 15000,
-  verbose = F
+  verbose = F,
+  jsonPath = NULL,
+  namePattern = "fol-",
+  return_results = T
 )
 }
 \arguments{
@@ -25,6 +28,8 @@ getFollowerIDs(
 \item{max_per_user}{Max number of followers to download per user}
 
 \item{verbose}{Monitor the process (recommended for debuging!)}
+
+\item{jsonPath}{Where to save the json files}
 }
 \value{
 A list of users and their followers

@@ -88,3 +88,74 @@ showUsers <- function(screen_name_list = NULL, user_id_list = NULL, include_enti
   results.df <- data.table::rbindlist(results.df, fill = T)
   return(results.df)
 }
+
+#' @export
+searchUsers <- function(query = NULL, include_entities = T , count = 100, auth_df, sleepTime = 30, verbose = F){
+  require(itertools)
+  require(iterators)
+  require(utils)
+  options(scipen=999)
+
+  if(is.null(query))
+    stop("the query parameter should be set.")
+  if(include_entities){
+    it <- 'true'
+  }else{
+    it <- 'false'
+  }
+
+  iterKeys <- itertools::recycle(t(auth_df), 10^6)
+  key <- iterators::nextElem(iterKeys)
+  auth <- key2auth(key)
+
+  url <- "https://api.twitter.com/1.1/users/search.json"
+
+  pages <- ceiling(count/20)
+  pb <- utils::txtProgressBar(min = 0, max = pages, style = 3)
+  counter <- 0
+  results <- list()
+
+  for(page in 1:pages){
+    if(verbose)
+      message("starting ", page)
+    q <- c(q=query, include_entities=it, count=20, page=page);
+
+    continue <- TRUE
+    while(continue){
+      current <- twitter_api_call(url, q, auth)
+      if(grepl("Rate limit exceeded", current)){
+        if(verbose)
+          message("Rate limit exceeded. Sleeping for ", sleepTime, " seconds")
+        Sys.sleep(sleepTime)
+        if(verbose)
+          message("Activating next key.... ")
+        key <- iterators::nextElem(iterKeys)
+        auth <- key2auth(key)
+      } else {
+        continue <- FALSE
+      }
+      if(grepl("Sorry, that page does not exist.|Not authorized", current)){
+        if(verbose)
+          message(current)
+        continue <- -1
+        break
+      }
+    }
+    if(continue<0){
+      if(verbose)
+        message("failed ", user, "\n")
+    } else {
+      results[[user]] <- current
+      if(verbose)
+        message("finished ", user, "\n")
+    }
+    counter <- counter+1
+    setTxtProgressBar(pb, counter)
+  }
+  close(pb)
+  message("out of ", length(items), ", ", length(results), " got downloaded")
+  results.df <- lapply(results, function(x) data.table::as.data.table(t(unlist(RJSONIO::fromJSON(x)))))
+  results.df <- data.table::rbindlist(results.df, fill = T)
+  return(results.df)
+}
+
