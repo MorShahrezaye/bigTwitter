@@ -58,7 +58,7 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
         continue <- TRUE
         while(continue){
           current <- twitter_api_call(url, q, auth)
-          if(grepl("Rate limit exceeded", current)){
+          if(grepl("Rate limit exceeded|Could not authenticate you.", current)){
             if(verbose)
               message("Rate limit exceeded. Sleeping for ", sleepTime, " seconds")
             Sys.sleep(sleepTime)
@@ -180,7 +180,7 @@ getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, 
           continue <- TRUE
           while(continue){
             current <- twitter_api_call(url, q, auth)
-            if(grepl("Rate limit exceeded", current)){
+            if(grepl("Rate limit exceeded|Could not authenticate you.", current)){
               if(verbose)
                 message("Rate limit exceeded. Sleeping for ", sleepTime, " seconds")
               Sys.sleep(sleepTime)
@@ -305,7 +305,7 @@ getFriendFollowersIDs <- function(screen_name_list = NULL, user_id_list = NULL, 
           continue <- TRUE
           while(continue){
             current <- twitter_api_call(friends_url, q, auth)
-            if(grepl("Rate limit exceeded", current)){
+            if(grepl("Rate limit exceeded|Could not authenticate you.", current)){
               if(verbose)
                 message("Rate limit exceeded. Sleeping for ", sleepTime, " seconds")
               Sys.sleep(sleepTime)
@@ -365,7 +365,7 @@ getFriendFollowersIDs <- function(screen_name_list = NULL, user_id_list = NULL, 
           continue <- TRUE
           while(continue){
             current <- twitter_api_call(followers_url, q, auth)
-            if(grepl("Rate limit exceeded", current)){
+            if(grepl("Rate limit exceeded|Could not authenticate you.", current)){
               if(verbose)
                 message("Rate limit exceeded. Sleeping for ", sleepTime, " seconds")
               Sys.sleep(sleepTime)
