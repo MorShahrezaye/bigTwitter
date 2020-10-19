@@ -81,6 +81,8 @@ getFollowerIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df
           current <- RJSONIO::fromJSON(current)
           RESPONSE$response <- c(RESPONSE$response, as.character(current$ids))
           RESPONSE$next_cursor_str <- as.character(current$next_cursor)
+          if(is.null(current$next_cursor))
+            RESPONSE$next_cursor_str <- "0"
         }
       }
       if(continue<0){
@@ -201,6 +203,8 @@ getFriendIDs <- function(screen_name_list = NULL, user_id_list = NULL, auth_df, 
             current <- RJSONIO::fromJSON(current)
             RESPONSE$response <- c(RESPONSE$response, as.character(current$ids))
             RESPONSE$next_cursor_str <- as.character(current$next_cursor)
+            if(is.null(current$next_cursor))
+              RESPONSE$next_cursor_str <- "0"
           }
         }
         if(continue<0){
@@ -324,6 +328,8 @@ getFriendFollowersIDs <- function(screen_name_list = NULL, user_id_list = NULL, 
             current <- RJSONIO::fromJSON(current)
             RESPONSE_friends$response <- c(RESPONSE_friends$response, as.character(current$ids))
             RESPONSE_friends$next_cursor_str <- as.character(current$next_cursor)
+            if(is.null(current$next_cursor))
+              RESPONSE_friends$next_cursor_str <- "0"
           }
         }
         if(continue<0){
@@ -382,6 +388,8 @@ getFriendFollowersIDs <- function(screen_name_list = NULL, user_id_list = NULL, 
             current <- RJSONIO::fromJSON(current)
             RESPONSE_followers$response <- c(RESPONSE_followers$response, as.character(current$ids))
             RESPONSE_followers$next_cursor_str <- as.character(current$next_cursor)
+            if(is.null(current$next_cursor))
+              RESPONSE_followers$next_cursor_str <- "0"
           }
         }
         if(continue<0){
